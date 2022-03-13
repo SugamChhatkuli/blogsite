@@ -9,8 +9,16 @@ class Profile(models.Model):
     contract = models.CharField(max_length=10, blank= True, null=True)
     profile_img = models.ImageField(upload_to='image/', blank=True, null=True)
     bio = models.CharField(default='No bio.......', max_length=50,blank= True, null=True)
+    friends = models.ManyToManyField("self",blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    
+
+    def get_no_of_friends(self):
+        return self.friends.all().count()
+
+    def get_friends(self):
+        return self.friends.all()
     
 
 class Blog(models.Model):

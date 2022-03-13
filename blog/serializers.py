@@ -14,10 +14,14 @@ class BlogSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model =  Profile
-        fields=['id','user','address','contract','profile_img','bio']
+        fields=['id','user','address','contract','profile_img','bio','friends','likes']
 
 class BlogLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields=['liked']
 
+class FriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields =['friends']

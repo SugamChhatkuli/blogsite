@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'blog',
     'account',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
+    'drf_registration',
 ]
 
 MIDDLEWARE = [
@@ -130,5 +132,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     )
+}
+
+AUTHENTICATION_BACKENDS = [
+    'drf_registration.auth.MultiFieldsModelBackend',
+]
+
+FACEBOOK_LOGIN_ENABLED = True
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bibekchhatkuli7@gmail.com'
+EMAIL_HOST_PASSWORD = 'gqaksrtfsrnnbtgf'
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
+   
 }
