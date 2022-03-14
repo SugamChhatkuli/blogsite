@@ -37,10 +37,16 @@ class BlogView(CreateAPIView):
         if serial.is_valid():
             user = Profile.objects.get(user = request.user)
             serial.save(author = user)
-            followers = user.friends.all()
             f_em_l = []
-            for i in followers:
-                f_em_l.append(i.user.email)
+
+            if data['selected_profile']:
+                followers = data['selected_profile']
+                for i in followers:
+                    f_em_l.append(Profile.objects.get(id = i).user.email)
+            else:
+                followers = user.friends.all()
+                for i in followers:
+                    f_em_l.append(i.user.email)            
 
             sent_follow_email_created(f_em_l,user.user.username)
             return Response(serial.data,status = status.HTTP_201_CREATED)
